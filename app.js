@@ -1,11 +1,17 @@
 const express = require('express');
 const cors = require("cors");
 const app = express();
+const cookieParser = require('cookie-parser');
 const employeeRoutes = require('./routes/employee');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const adminAuthRoutes = require('./routes/adminAuth');
+
+require('dotenv').config()
 
 app.use(express.json());
+app.use(cookieParser());
+
 
 const corsOptions = {
     origin: [process.env.CLIENT_DOMAIN],
@@ -19,5 +25,6 @@ app.use(cors(corsOptions));
 app.use('/api/employee', employeeRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/admin/auth', adminAuthRoutes);
 
 module.exports = app;
